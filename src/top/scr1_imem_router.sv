@@ -135,8 +135,13 @@ always_comb begin
     endcase
 end
 
+`ifdef SCR1_TRGT_SIMULATION
 assign port0_cmd   = (~port_sel) ? imem_cmd  : SCR1_MEM_CMD_ERROR;
 assign port0_addr  = (~port_sel) ? imem_addr : 'x;
+`else
+assign port0_cmd   = imem_cmd;
+assign port0_addr  = imem_addr;
+`endif
 
 //-------------------------------------------------------------------------------
 // Interface to PORT1
@@ -157,8 +162,13 @@ always_comb begin
     endcase
 end
 
+`ifdef SCR1_TRGT_SIMULATION
 assign port1_cmd   = (port_sel) ? imem_cmd  : SCR1_MEM_CMD_ERROR;
 assign port1_addr  = (port_sel) ? imem_addr : 'x;
+`else
+assign port1_cmd   = imem_cmd;
+assign port1_addr  = imem_addr;
+`endif
 
 `ifdef SCR1_TRGT_SIMULATION
 //-------------------------------------------------------------------------------

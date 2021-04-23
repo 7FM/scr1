@@ -92,8 +92,10 @@ localparam SCR1_SUM2_OP_ALL_NUM_E    = 2;
 localparam SCR1_SUM2_OP_WIDTH_E      = $clog2(SCR1_SUM2_OP_ALL_NUM_E);
 typedef enum logic [SCR1_SUM2_OP_WIDTH_E-1:0] {
     SCR1_SUM2_OP_PC_IMM,            // op1 = curr_pc; op2 = imm (AUIPC, target new_pc for JAL and branches)
-    SCR1_SUM2_OP_REG_IMM,           // op1 = rs1; op2 = imm (target new_pc for JALR, LOAD/STORE address)
-    SCR1_SUM2_OP_ERROR = 'x
+    SCR1_SUM2_OP_REG_IMM            // op1 = rs1; op2 = imm (target new_pc for JALR, LOAD/STORE address)
+`ifdef SCR1_TRGT_SIMULATION
+    ,SCR1_SUM2_OP_ERROR = 'x
+`endif
 } type_scr1_ialu_sum2_op_sel_e;
 
 //-------------------------------------------------------------------------------

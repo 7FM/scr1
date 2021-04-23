@@ -189,10 +189,17 @@ always_comb begin
     endcase
 end
 
+`ifdef SCR1_TRGT_SIMULATION
 assign port0_cmd    = (port_sel == SCR1_SEL_PORT0) ? dmem_cmd   : SCR1_MEM_CMD_ERROR;
 assign port0_width  = (port_sel == SCR1_SEL_PORT0) ? dmem_width : SCR1_MEM_WIDTH_ERROR;
 assign port0_addr   = (port_sel == SCR1_SEL_PORT0) ? dmem_addr  : 'x;
 assign port0_wdata  = (port_sel == SCR1_SEL_PORT0) ? dmem_wdata : 'x;
+`else
+assign port0_cmd    = dmem_cmd;
+assign port0_width  = dmem_width;
+assign port0_addr   = dmem_addr;
+assign port0_wdata  = dmem_wdata;
+`endif
 
 //-------------------------------------------------------------------------------
 // Interface to PORT1
@@ -213,10 +220,17 @@ always_comb begin
     endcase
 end
 
+`ifdef SCR1_TRGT_SIMULATION
 assign port1_cmd    = (port_sel == SCR1_SEL_PORT1) ? dmem_cmd   : SCR1_MEM_CMD_ERROR;
 assign port1_width  = (port_sel == SCR1_SEL_PORT1) ? dmem_width : SCR1_MEM_WIDTH_ERROR;
 assign port1_addr   = (port_sel == SCR1_SEL_PORT1) ? dmem_addr  : 'x;
 assign port1_wdata  = (port_sel == SCR1_SEL_PORT1) ? dmem_wdata : 'x;
+`else
+assign port1_cmd    = dmem_cmd;
+assign port1_width  = dmem_width;
+assign port1_addr   = dmem_addr;
+assign port1_wdata  = dmem_wdata;
+`endif
 
 //-------------------------------------------------------------------------------
 // Interface to PORT2
@@ -237,10 +251,17 @@ always_comb begin
     endcase
 end
 
+`ifdef SCR1_TRGT_SIMULATION
 assign port2_cmd    = (port_sel == SCR1_SEL_PORT2) ? dmem_cmd   : SCR1_MEM_CMD_ERROR;
 assign port2_width  = (port_sel == SCR1_SEL_PORT2) ? dmem_width : SCR1_MEM_WIDTH_ERROR;
 assign port2_addr   = (port_sel == SCR1_SEL_PORT2) ? dmem_addr  : 'x;
 assign port2_wdata  = (port_sel == SCR1_SEL_PORT2) ? dmem_wdata : 'x;
+`else
+assign port2_cmd    = dmem_cmd;
+assign port2_width  = dmem_width;
+assign port2_addr   = dmem_addr;
+assign port2_wdata  = dmem_wdata;
+`endif
 
 `ifdef SCR1_TRGT_SIMULATION
 //-------------------------------------------------------------------------------

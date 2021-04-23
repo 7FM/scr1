@@ -87,7 +87,11 @@ begin
         SCR1_MEM_WIDTH_BYTE :  axsize = 3'b000;
         SCR1_MEM_WIDTH_HWORD:  axsize = 3'b001;
         SCR1_MEM_WIDTH_WORD :  axsize = 3'b010;
-                     default:  axsize = 'x;
+                     default:  begin
+`ifdef SCR1_TRGT_SIMULATION
+                               axsize = 'x;
+`endif
+                     end
     endcase
 
     return axsize;
@@ -269,14 +273,22 @@ always_comb begin
             SCR1_MEM_WIDTH_BYTE :  wstrb = 4'h1 << core_addr[1:0];
             SCR1_MEM_WIDTH_HWORD:  wstrb = 4'h3 << core_addr[1:0];
             SCR1_MEM_WIDTH_WORD :  wstrb = 4'hf << core_addr[1:0];
-                         default:  wstrb = 'x;
+                         default: begin
+`ifdef SCR1_TRGT_SIMULATION
+                                   wstrb = 'x;
+`endif
+                         end
         endcase
     else
         case (req_fifo[req_proc_ptr].axi_width)
             SCR1_MEM_WIDTH_BYTE :  wstrb = 4'h1 << req_fifo[req_proc_ptr].axi_addr[1:0];
             SCR1_MEM_WIDTH_HWORD:  wstrb = 4'h3 << req_fifo[req_proc_ptr].axi_addr[1:0];
             SCR1_MEM_WIDTH_WORD :  wstrb = 4'hf << req_fifo[req_proc_ptr].axi_addr[1:0];
-                         default:  wstrb = 'x;
+                         default: begin
+`ifdef SCR1_TRGT_SIMULATION
+                                   wstrb = 'x;
+`endif
+                         end
         endcase
 end
 
@@ -292,7 +304,11 @@ always_comb begin
         SCR1_MEM_WIDTH_BYTE :  rcvd_rdata = rdata >> (8*req_fifo[req_done_ptr].axi_addr[1:0]);
         SCR1_MEM_WIDTH_HWORD:  rcvd_rdata = rdata >> (8*req_fifo[req_done_ptr].axi_addr[1:0]);
         SCR1_MEM_WIDTH_WORD :  rcvd_rdata = rdata >> (8*req_fifo[req_done_ptr].axi_addr[1:0]);
-                     default:  rcvd_rdata = 'x;
+                     default: begin
+`ifdef SCR1_TRGT_SIMULATION
+                               rcvd_rdata = 'x;
+`endif
+                     end
     endcase
 end
 

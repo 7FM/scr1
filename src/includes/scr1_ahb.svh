@@ -13,17 +13,23 @@ parameter SCR1_AHB_WIDTH  = 32;
 // Encoding for HTRANS signal
 parameter logic [1:0] SCR1_HTRANS_IDLE   = 2'b00;
 parameter logic [1:0] SCR1_HTRANS_NONSEQ = 2'b10;
+`ifdef SCR1_TRGT_SIMULATION
 parameter logic [1:0] SCR1_HTRANS_ERR    = 'x;
+`endif
 
 // Encoding for HBURST signal
 parameter logic [2:0] SCR1_HBURST_SINGLE = 3'b000;
+`ifdef SCR1_TRGT_SIMULATION
 parameter logic [2:0] SCR1_HBURST_ERR    = 'x;
+`endif
 
 // Encoding for HSIZE signal
 parameter logic [2:0] SCR1_HSIZE_8B    = 3'b000;
 parameter logic [2:0] SCR1_HSIZE_16B   = 3'b001;
 parameter logic [2:0] SCR1_HSIZE_32B   = 3'b010;
+`ifdef SCR1_TRGT_SIMULATION
 parameter logic [2:0] SCR1_HSIZE_ERR   = 'x;
+`endif
 
 // Encoding HPROT signal
 // HPROT[0] : 0 - instr;      1 - data

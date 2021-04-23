@@ -47,8 +47,10 @@ parameter   logic [1:0]                     SCR1_IPIC_PRV_M         = 2'b11;
 //-------------------------------------------------------------------------------
 typedef enum logic {
     SCR1_CSR2IPIC_RD,
-    SCR1_CSR2IPIC_WR,
-    SCR1_CSR2IPIC_ERROR = 'x
+    SCR1_CSR2IPIC_WR
+`ifdef SCR1_TRGT_SIMULATION
+    ,SCR1_CSR2IPIC_ERROR = 'x
+`endif
 } type_scr1_csr2ipic_wr_e;
 
 `endif // SCR1_IPIC_EN

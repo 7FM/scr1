@@ -256,7 +256,11 @@ always_comb begin
             SCR1_SCU_SYSCTRL_ADDR_MODE   : scu_csr_rdata = scu_mode_ff;
             SCR1_SCU_SYSCTRL_ADDR_STATUS : scu_csr_rdata = scu_status_ff;
             SCR1_SCU_SYSCTRL_ADDR_STICKY : scu_csr_rdata = scu_sticky_sts_ff;
-            default                      : scu_csr_rdata = 'x;
+            default                      : begin
+`ifdef SCR1_TRGT_SIMULATION
+                scu_csr_rdata = 'x;
+`endif
+            end
         endcase
     end
 end

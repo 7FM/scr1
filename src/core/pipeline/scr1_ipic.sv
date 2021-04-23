@@ -321,7 +321,9 @@ always_comb begin
                                  SCR1_IPIC_ICSR_LN_LSB]  = ipic_icsr.line;
             end
             default : begin
+`ifdef SCR1_TRGT_SIMULATION
                 ipic2csr_rdata_o = 'x;
+`endif
             end
         endcase
     end
@@ -348,11 +350,13 @@ always_comb begin
             SCR1_IPIC_IDX  : idxr_wr_req  = 1'b1;
             SCR1_IPIC_ICSR : icsr_wr_req  = 1'b1;
             default : begin // Illegal IPIC register address
+`ifdef SCR1_TRGT_SIMULATION
                 cicsr_wr_req = 'x;
                 eoi_wr_req   = 'x;
                 soi_wr_req   = 'x;
                 idxr_wr_req  = 'x;
                 icsr_wr_req  = 'x;
+`endif
             end
         endcase
     end

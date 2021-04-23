@@ -62,8 +62,10 @@ parameter bit [SCR1_EXC_CODE_WIDTH_E-1:0] SCR1_EXC_CODE_RESET               = 4'
 typedef enum logic [1:0] {
     SCR1_OP_WIDTH_BYTE  = 2'b00,
     SCR1_OP_WIDTH_HALF  = 2'b01,
-    SCR1_OP_WIDTH_WORD  = 2'b10,
-    SCR1_OP_WIDTH_ERROR = 'x
+    SCR1_OP_WIDTH_WORD  = 2'b10
+`ifdef SCR1_TRGT_SIMULATION
+    ,SCR1_OP_WIDTH_ERROR = 'x
+`endif
 } type_scr1_op_width_e;
 
 `endif //SCR1_ARCH_TYPES_SVH

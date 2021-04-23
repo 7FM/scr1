@@ -138,7 +138,9 @@ always_comb begin
             // FIFO read
             req_fifo_up     = 1'b1;
             req_fifo_new[0] = req_fifo_new[1];
+`ifdef SCR1_TRGT_SIMULATION
             req_fifo_new[1].haddr  = 'x;
+`endif
             req_fifo_cnt_new = req_fifo_cnt - 1'b1;
         end
         2'b11 : begin
@@ -147,9 +149,11 @@ always_comb begin
             req_fifo_new[0].haddr = imem_addr;
         end
         default : begin
+`ifdef SCR1_TRGT_SIMULATION
             req_fifo_up      = 'x;
             req_fifo_cnt_new = 'x;
             req_fifo_new     = 'x;
+`endif
         end
     endcase
 end

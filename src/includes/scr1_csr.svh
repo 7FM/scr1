@@ -186,8 +186,10 @@ parameter bit [6:0] SCR1_CSR_ADDR_MHPMEVENT_MASK    = 7'b0011001;
 //-------------------------------------------------------------------------------
 typedef enum logic {
     SCR1_CSR_RESP_OK,
-    SCR1_CSR_RESP_ER,
-    SCR1_CSR_RESP_ERROR = 'x
+    SCR1_CSR_RESP_ER
+`ifdef SCR1_TRGT_SIMULATION
+    ,SCR1_CSR_RESP_ERROR = 'x
+`endif
 } type_scr1_csr_resp_e;
 
 `endif // SCR1_CSR_SVH

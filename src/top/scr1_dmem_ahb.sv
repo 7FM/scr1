@@ -107,7 +107,11 @@ function automatic logic[SCR1_AHB_WIDTH-1:0] scr1_conv_mem2ahb_wdata (
 );
     logic   [SCR1_AHB_WIDTH-1:0]  tmp;
 begin
+`ifdef SCR1_TRGT_SIMULATION
     tmp = 'x;
+`else
+    tmp = SCR1_AHB_WIDTH'd0;
+`endif
     case (dmem_width)
         SCR1_MEM_WIDTH_BYTE : begin
             case (dmem_addr)
@@ -156,7 +160,11 @@ function automatic logic[SCR1_AHB_WIDTH-1:0] scr1_conv_ahb2mem_rdata (
 );
     logic   [SCR1_AHB_WIDTH-1:0]  tmp;
 begin
+`ifdef SCR1_TRGT_SIMULATION
     tmp = 'x;
+`else
+    tmp = SCR1_AHB_WIDTH'd0;
+`endif
     case (hwidth)
         SCR1_HSIZE_8B : begin
             case (haddr)
@@ -280,8 +288,10 @@ always_comb begin
             req_fifo_new[0] = req_fifo_new[1];
             req_fifo_new[1].hwrite = 1'b0;
             req_fifo_new[1].hwidth = SCR1_HSIZE_32B;
+`ifdef SCR1_TRGT_SIMULATION
             req_fifo_new[1].haddr  = 'x;
             req_fifo_new[1].hwdata = 'x;
+`endif
             req_fifo_cnt_new = req_fifo_cnt - 1'b1;
         end
         2'b11 : begin
@@ -293,9 +303,11 @@ always_comb begin
             req_fifo_new[0].hwdata = scr1_conv_mem2ahb_wdata(dmem_addr[1:0], dmem_width, dmem_wdata);
         end
         default : begin
+`ifdef SCR1_TRGT_SIMULATION
             req_fifo_up      = 'x;
             req_fifo_cnt_new = 'x;
             req_fifo_new     = 'x;
+`endif
         end
     endcase
 end
