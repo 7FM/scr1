@@ -158,7 +158,11 @@ always_comb begin
         SCR1_TAP_STATE_IR_PAUSE   : tap_fsm_next = tapc_tms ? SCR1_TAP_STATE_IR_EXIT2     : SCR1_TAP_STATE_IR_PAUSE;
         SCR1_TAP_STATE_IR_EXIT2   : tap_fsm_next = tapc_tms ? SCR1_TAP_STATE_IR_UPDATE    : SCR1_TAP_STATE_IR_SHIFT;
         SCR1_TAP_STATE_IR_UPDATE  : tap_fsm_next = tapc_tms ? SCR1_TAP_STATE_DR_SEL_SCAN  : SCR1_TAP_STATE_IDLE;
-        default                   : tap_fsm_next = SCR1_TAP_STATE_XXX;
+        default                   : begin
+`ifdef SCR1_TRGT_SIMULATION
+                                    tap_fsm_next = SCR1_TAP_STATE_XXX;
+`endif
+        end
     endcase
 end
 

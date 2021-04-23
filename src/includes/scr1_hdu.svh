@@ -35,28 +35,36 @@ typedef enum logic [1:0] {
     SCR1_HDU_DBGSTATE_RESET         = 2'b00,
     SCR1_HDU_DBGSTATE_RUN           = 2'b01,
     SCR1_HDU_DBGSTATE_DHALTED       = 2'b10,
-    SCR1_HDU_DBGSTATE_DRUN          = 2'b11,
-    SCR1_HDU_DBGSTATE_XXX           = 'X
+    SCR1_HDU_DBGSTATE_DRUN          = 2'b11
+`ifdef SCR1_TRGT_SIMULATION
+    ,SCR1_HDU_DBGSTATE_XXX           = 'X
+`endif
 } type_scr1_hdu_dbgstates_e;
 
 typedef enum logic [1:0] {
     SCR1_HDU_PBUFSTATE_IDLE          = 2'b00,
     SCR1_HDU_PBUFSTATE_FETCH         = 2'b01,
     SCR1_HDU_PBUFSTATE_EXCINJECT     = 2'b10,
-    SCR1_HDU_PBUFSTATE_WAIT4END      = 2'b11,
-    SCR1_HDU_PBUFSTATE_XXX           = 'X
+    SCR1_HDU_PBUFSTATE_WAIT4END      = 2'b11
+`ifdef SCR1_TRGT_SIMULATION
+    ,SCR1_HDU_PBUFSTATE_XXX           = 'X
+`endif
 } type_scr1_hdu_pbufstates_e;
 
 typedef enum logic {
     SCR1_HDU_HARTCMD_RESUME         = 1'b0,
-    SCR1_HDU_HARTCMD_HALT           = 1'b1,
-    SCR1_HDU_HARTCMD_XXX            = 1'bX
+    SCR1_HDU_HARTCMD_HALT           = 1'b1
+`ifdef SCR1_TRGT_SIMULATION
+    ,SCR1_HDU_HARTCMD_XXX            = 1'bX
+`endif
 } type_scr1_hdu_hart_command_e;
 
 typedef enum logic {
     SCR1_HDU_FETCH_SRC_NORMAL       = 1'b0,
-    SCR1_HDU_FETCH_SRC_PBUF         = 1'b1,
-    SCR1_HDU_FETCH_SRC_XXX          = 1'bX
+    SCR1_HDU_FETCH_SRC_PBUF         = 1'b1
+`ifdef SCR1_TRGT_SIMULATION
+    ,SCR1_HDU_FETCH_SRC_XXX          = 1'bX
+`endif
 } type_scr1_hdu_fetch_src_e;
 
 typedef struct packed {
@@ -87,8 +95,10 @@ typedef enum logic [2:0] {
     SCR1_HDU_HALTCAUSE_TMREQ        = 3'b010,
     SCR1_HDU_HALTCAUSE_DMREQ        = 3'b011,
     SCR1_HDU_HALTCAUSE_SSTEP        = 3'b100,
-    SCR1_HDU_HALTCAUSE_RSTEXIT      = 3'b101,
-    SCR1_HDU_HALTCAUSE_XXX          = 'X
+    SCR1_HDU_HALTCAUSE_RSTEXIT      = 3'b101
+`ifdef SCR1_TRGT_SIMULATION
+    ,SCR1_HDU_HALTCAUSE_XXX          = 'X
+`endif
 } type_scr1_hdu_haltcause_e;
 
 typedef struct packed {

@@ -44,6 +44,8 @@ parameter SCR1_HPROT_CACHE = 3;
 // Encoding HRESP signal
 parameter logic SCR1_HRESP_OKAY  = 1'b0;
 parameter logic SCR1_HRESP_ERROR = 1'b1;
+`ifdef SCR1_TRGT_SIMULATION
 parameter logic SCR1_HRESP_ERR   = 1'bx;
+`endif
 
 `endif // SCR1_AHB_SVH

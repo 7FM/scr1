@@ -24,16 +24,20 @@ typedef enum logic [SCR1_SCU_DR_SYSCTRL_OP_WIDTH-1:0] {
     SCR1_SCU_SYSCTRL_OP_WRITE       = 2'h0,
     SCR1_SCU_SYSCTRL_OP_READ        = 2'h1,
     SCR1_SCU_SYSCTRL_OP_SETBITS     = 2'h2,
-    SCR1_SCU_SYSCTRL_OP_CLRBITS     = 2'h3,
-    SCR1_SCU_SYSCTRL_OP_XXX         = 'X
+    SCR1_SCU_SYSCTRL_OP_CLRBITS     = 2'h3
+`ifdef SCR1_TRGT_SIMULATION
+    ,SCR1_SCU_SYSCTRL_OP_XXX         = 'X
+`endif
 } type_scr1_scu_sysctrl_op_e;
 
 typedef enum logic [SCR1_SCU_DR_SYSCTRL_ADDR_WIDTH-1:0] {
     SCR1_SCU_SYSCTRL_ADDR_CONTROL   = 2'h0,
     SCR1_SCU_SYSCTRL_ADDR_MODE      = 2'h1,
     SCR1_SCU_SYSCTRL_ADDR_STATUS    = 2'h2,
-    SCR1_SCU_SYSCTRL_ADDR_STICKY    = 2'h3,
-    SCR1_SCU_SYSCTRL_ADDR_XXX       = 'X
+    SCR1_SCU_SYSCTRL_ADDR_STICKY    = 2'h3
+`ifdef SCR1_TRGT_SIMULATION
+    ,SCR1_SCU_SYSCTRL_ADDR_XXX       = 'X
+`endif
 } type_scr1_scu_sysctrl_addr_e;
 
 typedef struct packed {

@@ -303,7 +303,9 @@ always_comb begin
                                                      : SCR1_HDU_DBGSTATE_DRUN;
             end
             default: begin
+`ifdef SCR1_TRGT_SIMULATION
                 dbg_state_next = SCR1_HDU_DBGSTATE_XXX;
+`endif
             end
         endcase
     end
@@ -361,9 +363,11 @@ always_comb begin
             end
 
             default : begin
+`ifdef SCR1_TRGT_SIMULATION
                 dfsm_trans_next  = 'X;
                 dfsm_update_next = 'X;
                 dfsm_event_next  = 'X;
+`endif
             end
         endcase
     end
@@ -391,7 +395,11 @@ always_comb begin
             SCR1_HDU_DBGSTATE_DHALTED: hart_cmd_req = (dfsm_update | dfsm_trans);
             SCR1_HDU_DBGSTATE_RUN,
             SCR1_HDU_DBGSTATE_DRUN   : hart_cmd_req = ~dfsm_update & dfsm_trans;
-            default                  : hart_cmd_req = 'X;        
+            default                  : begin
+`ifdef SCR1_TRGT_SIMULATION
+                                       hart_cmd_req = 'X;
+`endif
+            end
         endcase
     end
 end
@@ -638,9 +646,11 @@ always_comb begin : csr_if_regsel
             SCR1_HDU_DBGCSR_OFFS_DPC      : csr_dpc_sel       = 1'b1;
             SCR1_HDU_DBGCSR_OFFS_DSCRATCH0: csr_dscratch0_sel = 1'b1;
             default : begin
+`ifdef SCR1_TRGT_SIMULATION
                                             csr_dcsr_sel      = 1'bX;
                                             csr_dpc_sel       = 1'bX;
                                             csr_dscratch0_sel = 1'bX;
+`endif
             end
         endcase
     end
@@ -664,7 +674,11 @@ always_comb begin : csr_if_write
             SCR1_CSR_CMD_WRITE : csr_wr_data = csr2hdu_wdata_i;
             SCR1_CSR_CMD_SET   : csr_wr_data = csr_rd_data | csr2hdu_wdata_i;
             SCR1_CSR_CMD_CLEAR : csr_wr_data = csr_rd_data & (~csr2hdu_wdata_i);
-            default            : csr_wr_data = 'X;
+            default            : begin
+`ifdef SCR1_TRGT_SIMULATION
+                                 csr_wr_data = 'X;
+`endif
+            end
         endcase
     end
 end : csr_if_write
@@ -779,7 +793,9 @@ always_comb begin
         end
 
         default: begin
+`ifdef SCR1_TRGT_SIMULATION
             hdu2dm_cmd_resp_o  = 'X;
+`endif
         end
     endcase
 end

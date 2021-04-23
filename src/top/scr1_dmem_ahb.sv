@@ -49,8 +49,10 @@ localparam  SCR1_FIFO_CNT_WIDTH = $clog2(SCR1_FIFO_WIDTH+1);
 //-------------------------------------------------------------------------------
 typedef enum logic {
     SCR1_FSM_ADDR = 1'b0,
-    SCR1_FSM_DATA = 1'b1,
-    SCR1_FSM_ERR  = 1'bx
+    SCR1_FSM_DATA = 1'b1
+`ifdef SCR1_TRGT_SIMULATION
+    ,SCR1_FSM_ERR  = 1'bx
+`endif
 } type_scr1_fsm_e;
 
 typedef struct packed {
@@ -93,7 +95,9 @@ begin
             tmp = SCR1_HSIZE_32B;
         end
         default : begin
+`ifdef SCR1_TRGT_SIMULATION
             tmp = SCR1_HSIZE_ERR;
+`endif
         end
     endcase
     return tmp;
@@ -353,7 +357,9 @@ always_ff @(negedge rst_n, posedge clk) begin
                 end
             end
             default : begin
+`ifdef SCR1_TRGT_SIMULATION
                 fsm <= SCR1_FSM_ERR;
+`endif
             end
         endcase
     end
@@ -373,7 +379,9 @@ always_comb begin
             end
         end
         default : begin
+`ifdef SCR1_TRGT_SIMULATION
             req_fifo_rd = 1'bx;
+`endif
         end
     endcase
 end
@@ -466,7 +474,9 @@ always_comb begin
             end
         end
         default : begin
+`ifdef SCR1_TRGT_SIMULATION
             htrans = SCR1_HTRANS_ERR;
+`endif
         end
     endcase
 end
