@@ -144,7 +144,7 @@ parameter int unsigned SCR1_MTVEC_BASE_WR_BITS = 26;    // number of writable hi
 `define SCR1_EXPOSE_DM_ONLY         // directly expose DM and discard TAPC interface
 `define SCR1_TDU_EN                 // enable Trigger Debug Unit (hardware breakpoints)
 parameter int unsigned SCR1_TDU_TRIG_NUM = 2;   // number of hardware triggers
-//`define SCR1_TDU_ICOUNT_EN          // enable hardware triggers on instruction counter
+`define SCR1_TDU_ICOUNT_EN          // enable hardware triggers on instruction counter
 //`define SCR1_IPIC_EN                // enable Integrated Programmable Interrupt Controller
 //`define SCR1_IPIC_SYNC_EN           // enable IPIC synchronizer
 //`define SCR1_TCM_EN                 // enable Tightly-Coupled Memory
