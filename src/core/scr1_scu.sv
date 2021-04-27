@@ -40,6 +40,7 @@ module scr1_scu (
     input  logic        test_rst_n,                   // DFT Test Reset
     input  logic        clk,                          // SCU clock
 
+`ifndef SCR1_EXPOSE_DM_ONLY
     // TAPC scan-chains
     input  logic        tapcsync2scu_ch_sel_i,        // TAPC Chain Select
     input  logic        tapcsync2scu_ch_id_i,         // TAPC Chain ID
@@ -48,6 +49,7 @@ module scr1_scu (
     input  logic        tapcsync2scu_ch_update_i,     // TAPC Chain Update
     input  logic        tapcsync2scu_ch_tdi_i,        // TAPC Chain TDI
     output logic        scu2tapcsync_ch_tdo_o,        // TAPC Chain TDO
+`endif
 
     // Input sync resets:
     input  logic        ndm_rst_n_i,                  // Non-DM Reset input from DM
@@ -155,6 +157,7 @@ logic                                       hdu_rst_n_qlfy;
 logic                                       dm_rst_n_in;
 logic                                       dm_rst_n_status;
 
+`ifndef SCR1_EXPOSE_DM_ONLY
 //------------------------------------------------------------------------------
 // TAPC scan-chain i/f
 //------------------------------------------------------------------------------
@@ -264,6 +267,35 @@ always_comb begin
         endcase
     end
 end
+
+`else
+//TODO
+//TODO
+//TODO
+//TODO
+//TODO
+//TODO
+//TODO
+//TODO
+//TODO better handling required to allow for resets!
+//TODO -> create custom DM to JTAG to also allow triggering resets?
+assign scu_control_wr_req    = 1'b0;
+assign scu_mode_wr_req       = 1'b0;
+assign scu_sticky_sts_wr_req = 1'b0;
+assign scu_csr_wdata = '0;
+assign scu_csr_rdata = '0;
+//TODO
+//TODO
+//TODO
+//TODO
+//TODO
+//TODO
+//TODO
+//TODO
+//TODO
+//TODO
+//TODO
+`endif
 
 //------------------------------------------------------------------------------
 // SCU CSRs

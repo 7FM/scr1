@@ -51,6 +51,15 @@ module scr1_core_top (
     input   logic [63:0]                            core_mtimer_val_i,          // Machine timer value
 
 `ifdef SCR1_DBG_EN
+`ifdef SCR1_EXPOSE_DM_ONLY
+    // DM Interface
+    input   logic                                   dmi_req,                    // DMI request
+    input   logic                                   dmi_wr,                     // DMI write
+    input   logic [SCR1_DBG_DMI_ADDR_WIDTH-1:0]     dmi_addr,                   // DMI address
+    input   logic [SCR1_DBG_DMI_DATA_WIDTH-1:0]     dmi_wdata,                  // DMI write data
+    output  logic                                   dmi_resp,                   // DMI response
+    output  logic [SCR1_DBG_DMI_DATA_WIDTH-1:0]     dmi_rdata,                  // DMI read data
+`else
     // Debug Interface
     input   logic                                   tapc_trst_n,                // Test Reset (TRSTn)
     input   logic                                   tapc_tck,                   // Test Clock (TCK)
@@ -58,6 +67,7 @@ module scr1_core_top (
     input   logic                                   tapc_tdi,                   // Test Data Input (TDI)
     output  logic                                   tapc_tdo,                   // Test Data Output (TDO)
     output  logic                                   tapc_tdo_en,                // TDO Enable, signal for TDO buffer control
+`endif
 `endif // SCR1_DBG_EN
 
     // Instruction Memory Interface
@@ -105,6 +115,7 @@ logic                                           rst_n_sync;
 logic                                           cpu_rst_n_sync;
 
 `ifdef SCR1_DBG_EN
+`ifndef SCR1_EXPOSE_DM_ONLY
 // TAPC-DM Interface
 logic                                           tapc_dmi_ch_sel;
 logic [SCR1_DBG_DMI_CH_ID_WIDTH-1:0]            tapc_dmi_ch_id;
@@ -121,7 +132,7 @@ logic                                           tapc_dmi_ch_shift_tapout;
 logic                                           tapc_dmi_ch_update_tapout;
 logic                                           tapc_dmi_ch_tdi_tapout;
 logic                                           tapc_dmi_ch_tdo_tapin;
-//
+// DM Interface
 logic                                           dmi_req;
 logic                                           dmi_wr;
 logic [SCR1_DBG_DMI_ADDR_WIDTH-1:0]             dmi_addr;
@@ -133,6 +144,7 @@ logic                                           tapc_scu_ch_sel;
 logic                                           tapc_scu_ch_sel_tapout;
 logic                                           tapc_scu_ch_tdo;
 logic                                           tapc_ch_tdo;
+`endif
 // SCU nets
 logic                                           sys_rst_n;
 logic                                           sys_rst_status;
@@ -197,6 +209,7 @@ scr1_scu    i_scu (
     .test_rst_n                 (test_rst_n         ),
     .clk                        (clk                ),
 
+`ifndef SCR1_EXPOSE_DM_ONLY
     // TAPC scan-chains
     .tapcsync2scu_ch_sel_i      (tapc_scu_ch_sel    ),
     .tapcsync2scu_ch_id_i       ('0                 ),
@@ -205,6 +218,7 @@ scr1_scu    i_scu (
     .tapcsync2scu_ch_update_i   (tapc_dmi_ch_update ),
     .tapcsync2scu_ch_tdi_i      (tapc_dmi_ch_tdi    ),
     .scu2tapcsync_ch_tdo_o      (tapc_scu_ch_tdo    ),
+`endif
 
     // Input sync resets:
     .ndm_rst_n_i                (ndm_rst_n          ),
@@ -354,6 +368,8 @@ scr1_pipe_top i_pipe_top (
 
 
 `ifdef SCR1_DBG_EN
+`ifndef SCR1_EXPOSE_DM_ONLY
+
 //-------------------------------------------------------------------------------
 // TAP Controller (TAPC)
 //-------------------------------------------------------------------------------
@@ -434,6 +450,7 @@ scr1_dmi i_dmi (
     .dmi2dm_wdata_o             (dmi_wdata          )
 );
 
+`endif
 `endif // SCR1_DBG_EN
 
 

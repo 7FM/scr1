@@ -9,6 +9,12 @@
 `include "scr1_ipic.svh"
 `endif // SCR1_IPIC_EN
 
+`ifdef SCR1_DBG_EN
+`ifdef SCR1_EXPOSE_DM_ONLY
+`include "scr1_dm.svh"
+`endif
+`endif
+
 `ifdef SCR1_TCM_EN
  `define SCR1_IMEM_ROUTER_EN
 `endif // SCR1_TCM_EN
@@ -45,6 +51,24 @@ module scr1_top_axi (
     input   logic                                   soft_irq,               // Software IRQ input
 
 `ifdef SCR1_DBG_EN
+`ifdef SCR1_EXPOSE_DM_ONLY
+    // DM Interface
+    input   logic                                   dmi_req,                // DMI request
+    input   logic                                   dmi_wr,                 // DMI write
+//TODO find better workaround than hardcoding the values to make Vivado compile
+//    input   logic [SCR1_DBG_DMI_ADDR_WIDTH-1:0]     dmi_addr,               // DMI address
+    input   logic [7-1:0]     dmi_addr,               // DMI address
+//TODO find better workaround than hardcoding the values to make Vivado compile
+//    input   logic [SCR1_DBG_DMI_DATA_WIDTH-1:0]     dmi_wdata,              // DMI write data
+    input   logic [32-1:0]     dmi_wdata,              // DMI write data
+    output  logic                                   dmi_resp,               // DMI response
+//TODO find better workaround than hardcoding the values to make Vivado compile
+//    output  logic [SCR1_DBG_DMI_DATA_WIDTH-1:0]     dmi_rdata,              // DMI read data
+    output  logic [32-1:0]     dmi_rdata,              // DMI read data
+
+    // Leftovers from JTAG as it is used else where too
+    input   logic                                   trst_n,
+`else
     // -- JTAG I/F
     input   logic                                   trst_n,
     input   logic                                   tck,
@@ -52,6 +76,7 @@ module scr1_top_axi (
     input   logic                                   tdi,
     output  logic                                   tdo,
     output  logic                                   tdo_en,
+`endif
 `endif // SCR1_DBG_EN
 
     // Instruction Memory Interface
@@ -323,6 +348,15 @@ scr1_core_top i_core_top (
     .core_mtimer_val_i          (timer_val        ),
 
 `ifdef SCR1_DBG_EN
+`ifdef SCR1_EXPOSE_DM_ONLY
+    // DM Interface
+    .dmi_req(dmi_req),
+    .dmi_wr(dmi_wr),
+    .dmi_addr(dmi_addr),
+    .dmi_wdata(dmi_wdata),
+    .dmi_resp(dmi_resp),
+    .dmi_rdata(dmi_rdata),
+`else
     // Debug interface
     .tapc_trst_n                (tapc_trst_n      ),
     .tapc_tck                   (tck              ),
@@ -330,6 +364,7 @@ scr1_core_top i_core_top (
     .tapc_tdi                   (tdi              ),
     .tapc_tdo                   (tdo              ),
     .tapc_tdo_en                (tdo_en           ),
+`endif
 `endif // SCR1_DBG_EN
 
     // Instruction memory interface
