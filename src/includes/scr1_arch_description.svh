@@ -140,8 +140,8 @@ parameter int unsigned SCR1_MTVEC_BASE_WR_BITS = 26;    // number of writable hi
 `define SCR1_MCOUNTEN_EN            // enable custom MCOUNTEN CSR for counter control
 
 // Uncore options
-//`define SCR1_DBG_EN                 // enable Debug Subsystem (TAPC, DM, SCU, HDU)
-//`define SCR1_TDU_EN                 // enable Trigger Debug Unit (hardware breakpoints)
+`define SCR1_DBG_EN                 // enable Debug Subsystem (TAPC, DM, SCU, HDU)
+`define SCR1_TDU_EN                 // enable Trigger Debug Unit (hardware breakpoints)
 parameter int unsigned SCR1_TDU_TRIG_NUM = 2;   // number of hardware triggers
 //`define SCR1_TDU_ICOUNT_EN          // enable hardware triggers on instruction counter
 //`define SCR1_IPIC_EN                // enable Integrated Programmable Interrupt Controller
