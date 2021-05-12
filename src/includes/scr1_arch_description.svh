@@ -147,7 +147,7 @@ parameter int unsigned SCR1_TDU_TRIG_NUM = 2;   // number of hardware triggers
 `define SCR1_TDU_ICOUNT_EN          // enable hardware triggers on instruction counter
 //`define SCR1_IPIC_EN                // enable Integrated Programmable Interrupt Controller
 //`define SCR1_IPIC_SYNC_EN           // enable IPIC synchronizer
-//`define SCR1_TCM_EN                 // enable Tightly-Coupled Memory
+`define SCR1_TCM_EN                 // enable Tightly-Coupled Memory
 
 `endif // end custom configuration section
 
