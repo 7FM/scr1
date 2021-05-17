@@ -469,6 +469,14 @@ assign dm_pbuf_addr_qlfy   = dm_pbuf_addr  & {$bits(dm_pbuf_addr){hdu2dm_rdc_qlf
 assign dm_dreg_req_qlfy    = dm_dreg_req   & {$bits(dm_dreg_req){hdu2dm_rdc_qlfy}};
 assign dm_pc_sample_qlfy   = dm_pc_sample  & {$bits(dm_pc_sample){core2dm_rdc_qlfy}};
 
+// buffer dm2dmi_rdata_o as in scr1_dmi
+logic                                               dm_rdata_upd;
+logic [SCR1_DBG_DMI_DATA_WIDTH-1:0]                 dm_rdata_ff;
+logic [SCR1_DBG_DMI_DATA_WIDTH-1:0]                 dmi_rdata_im;
+
+// assign the ff value to output port
+assign dmi_rdata = dm_rdata_ff;
+
 scr1_dm i_dm (
     // Common signals
     .rst_n                      (dm_rst_n               ),
@@ -480,7 +488,7 @@ scr1_dm i_dm (
     .dmi2dm_addr_i              (dmi_addr               ),
     .dmi2dm_wdata_i             (dmi_wdata              ),
     .dm2dmi_resp_o              (dmi_resp               ),
-    .dm2dmi_rdata_o             (dmi_rdata              ),
+    .dm2dmi_rdata_o             (dmi_rdata_im           ),
 
     // DM <-> Pipeline: HART Run Control i/f
     .ndm_rst_n_o                (ndm_rst_n              ),
@@ -508,6 +516,17 @@ scr1_dm i_dm (
     .dm2pipe_dreg_fail_o        (dm_dreg_fail           ),
     .dm2pipe_dreg_rdata_o       (dm_dreg_rdata          )
 );
+
+assign dm_rdata_upd = dmi_req & dmi_resp & ~dmi_wr;
+
+always_ff @(posedge clk, negedge rst_n) begin
+    if (~rst_n) begin
+        dm_rdata_ff <= '0;
+    end else if (dm_rdata_upd) begin
+        dm_rdata_ff <= dmi_rdata_im;
+    end
+end
+
 `endif // SCR1_DBG_EN
 
 
