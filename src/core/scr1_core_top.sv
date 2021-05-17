@@ -519,8 +519,8 @@ scr1_dm i_dm (
 
 assign dm_rdata_upd = dmi_req & dmi_resp & ~dmi_wr;
 
-always_ff @(posedge clk, negedge rst_n) begin
-    if (~rst_n) begin
+always_ff @(posedge clk, negedge dm_rst_n) begin
+    if (~dm_rst_n) begin
         dm_rdata_ff <= '0;
     end else if (dm_rdata_upd) begin
         dm_rdata_ff <= dmi_rdata_im;
