@@ -23,7 +23,7 @@ module scr1_top_tb_axi_dmi (
 //TODO find better workaround than hardcoding the values to make Vivado compile
 //    input   logic [SCR1_DBG_DMI_DATA_WIDTH-1:0]     dmi_wdata,              // DMI write data
     input   logic [32-1:0]     dmi_wdata,              // DMI write data
-    output  logic                                   dmi_resp,               // DMI response
+//    output  logic                                   dmi_resp,               // DMI response
 //TODO find better workaround than hardcoding the values to make Vivado compile
 //    output  logic [SCR1_DBG_DMI_DATA_WIDTH-1:0]     dmi_rdata,              // DMI read data
     output  logic [32-1:0]     dmi_rdata,              // DMI read data
@@ -51,6 +51,10 @@ localparam                          SCR1_MEM_SIZE       = 1024*1024;
 `ifdef SCR1_DBG_EN
 logic                                   trst_n;
 assign trst_n = 1'b1;
+`ifdef SCR1_EXPOSE_DM_ONLY
+// Is always set to 1 -> do not expose as it wont be used anyways
+logic                                   dmi_resp;
+`endif
 `endif
 
 logic                                   rtc_clk;
