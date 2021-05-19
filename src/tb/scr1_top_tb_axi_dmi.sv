@@ -8,7 +8,7 @@
 `include "scr1_ipic.svh"
 `endif // SCR1_IPIC_EN
 
-module scr1_top_tb_axi (
+module scr1_top_tb_axi_dmi (
     input logic clk,
     input logic rst_n
 `ifdef SCR1_DBG_EN
