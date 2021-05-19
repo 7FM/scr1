@@ -26,14 +26,14 @@ module scr1_top_tb_axi_dmi (
 //    output  logic                                   dmi_resp,               // DMI response
 //TODO find better workaround than hardcoding the values to make Vivado compile
 //    output  logic [SCR1_DBG_DMI_DATA_WIDTH-1:0]     dmi_rdata,              // DMI read data
-    output  logic [32-1:0]     dmi_rdata,              // DMI read data
+    output  logic [32-1:0]     dmi_rdata              // DMI read data
 `else
     // -- JTAG I/F
     input   logic                                   tck,
     input   logic                                   tms,
     input   logic                                   tdi,
     output  logic                                   tdo,
-    output  logic                                   tdo_en,
+    output  logic                                   tdo_en
 `endif
 `endif // SCR1_DBG_EN
 );
