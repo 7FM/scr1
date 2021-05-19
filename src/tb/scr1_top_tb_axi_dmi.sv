@@ -198,7 +198,6 @@ scr1_top_axi i_top (
     .test_rst_n             (1'b1                   ),
 
 `ifdef SCR1_DBG_EN
-    ,
 `ifdef SCR1_EXPOSE_DM_ONLY
     // DM Interface
     .dmi_req(dmi_req),
