@@ -469,13 +469,18 @@ assign dm_pbuf_addr_qlfy   = dm_pbuf_addr  & {$bits(dm_pbuf_addr){hdu2dm_rdc_qlf
 assign dm_dreg_req_qlfy    = dm_dreg_req   & {$bits(dm_dreg_req){hdu2dm_rdc_qlfy}};
 assign dm_pc_sample_qlfy   = dm_pc_sample  & {$bits(dm_pc_sample){core2dm_rdc_qlfy}};
 
+
+logic [SCR1_DBG_DMI_DATA_WIDTH-1:0]                 dmi_rdata_im;
+`ifdef SCR1_EXPOSE_DM_ONLY
 // buffer dm2dmi_rdata_o as in scr1_dmi
 logic                                               dm_rdata_upd;
 logic [SCR1_DBG_DMI_DATA_WIDTH-1:0]                 dm_rdata_ff;
-logic [SCR1_DBG_DMI_DATA_WIDTH-1:0]                 dmi_rdata_im;
 
 // assign the ff value to output port
 assign dmi_rdata = dm_rdata_ff;
+`else
+assign dmi_rdata = dm_rdata_im;
+`endif
 
 scr1_dm i_dm (
     // Common signals
@@ -517,6 +522,7 @@ scr1_dm i_dm (
     .dm2pipe_dreg_rdata_o       (dm_dreg_rdata          )
 );
 
+`ifdef SCR1_EXPOSE_DM_ONLY
 assign dm_rdata_upd = dmi_req & dmi_resp & ~dmi_wr;
 
 always_ff @(posedge clk, negedge dm_rst_n) begin
@@ -526,6 +532,7 @@ always_ff @(posedge clk, negedge dm_rst_n) begin
         dm_rdata_ff <= dmi_rdata_im;
     end
 end
+`endif
 
 `endif // SCR1_DBG_EN
 
