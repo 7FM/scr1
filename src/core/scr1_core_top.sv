@@ -471,7 +471,7 @@ assign dm_pc_sample_qlfy   = dm_pc_sample  & {$bits(dm_pc_sample){core2dm_rdc_ql
 
 
 logic [SCR1_DBG_DMI_DATA_WIDTH-1:0]                 dmi_rdata_im;
-`ifdef SCR1_EXPOSE_DM_ONLY
+`ifdef SCR1_EXPOSE_DM_ONLY_BUFFER_RDATA
 // buffer dm2dmi_rdata_o as in scr1_dmi
 logic                                               dm_rdata_upd;
 logic [SCR1_DBG_DMI_DATA_WIDTH-1:0]                 dm_rdata_ff;
@@ -522,7 +522,7 @@ scr1_dm i_dm (
     .dm2pipe_dreg_rdata_o       (dm_dreg_rdata          )
 );
 
-`ifdef SCR1_EXPOSE_DM_ONLY
+`ifdef SCR1_EXPOSE_DM_ONLY_BUFFER_RDATA
 assign dm_rdata_upd = dmi_req & dmi_resp & ~dmi_wr;
 
 always_ff @(posedge clk, negedge dm_rst_n) begin
