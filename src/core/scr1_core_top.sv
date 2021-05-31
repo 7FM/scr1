@@ -479,7 +479,7 @@ logic [SCR1_DBG_DMI_DATA_WIDTH-1:0]                 dm_rdata_ff;
 // assign the ff value to output port
 assign dmi_rdata = dm_rdata_ff;
 `else
-assign dmi_rdata = dm_rdata_im;
+assign dmi_rdata = dmi_rdata_im;
 `endif
 
 scr1_dm i_dm (
